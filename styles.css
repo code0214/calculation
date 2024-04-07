@@ -1,0 +1,55 @@
+.value_input{
+    font-size: 1.75rem;
+    text-align: center;
+    width: 20%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black; /* Set bottom border */
+    outline: none;
+    color: blue;
+}
+
+.lable_input{
+    width: 20%;
+    
+}
+.value_cal{
+    width: 20%;
+    border-bottom: 1px solid #000000; 
+    margin: 0;
+    color: red;
+    text-align: center;
+}
+
+.value_fix{
+    width: 20%;
+    border-bottom: 1px solid #000000; 
+    margin: 0;
+    color: red;
+    text-align: center;
+    color: #000000;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('bg.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center; 
+    filter: blur(5px); 
+    z-index: -1; 
+}
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white color */
+    z-index: -1;
+}
