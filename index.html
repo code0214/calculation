@@ -34,10 +34,10 @@
                     <div class="mt-5">
                         <div class="d-flex justify-content-center" style="gap:5px">
                             <h3>$</h3>
-                            <input class="value_input "  id = "a"/>
+                            <input class="value_input "  id = "a" onkeypress="return isNumberKey(event)"/>
                             <h3>-</h3>
                             <h3>$</h3>
-                            <input class="value_input "  id = "b"/>
+                            <input class="value_input "  id = "b" onkeypress="return isNumberKey(event)"/>
                             <h3>=</h3>
                             <h3>$</h3>
                             <h3 class="value_cal  c"   ></h3>
@@ -57,7 +57,7 @@
                     <div class="mt-5">
                         <div class="d-flex justify-content-center" style="gap:5px">
                             <h3>$</h3>
-                            <h3 class="value_cal  a"></h3>
+                            <h3 class="value_cal  a" ></h3>
                             <h3>/</h3>
                             <h3>$</h3>
                             <h3 class="value_cal  c"></h3>
@@ -67,13 +67,13 @@
                         </div>
                         <div class="d-flex justify-content-center" style="gap:5px">
                             <h3 class="invisible">$</h3>
-                            <h3 class="lable_input text-center">(a)</h3>
+                            <h3 class="lable_input text-center"   >(a)</h3>
                             <h3 class="invisible">/</h3>
                             <h3 class="invisible">$</h3>
                             <h3 class="lable_input text-center" >(c)</h3>
                             <h3 class="invisible">=</h3>
                             <h3 class="invisible">$</h3>
-                            <h3 class="lable_input text-center">(x)</h3>
+                            <h3 class="lable_input text-center" >(x)</h3>
                         </div>
                     </div>
     
@@ -108,10 +108,10 @@
                     <div class="mt-5" lable = "1_line">
                         <div class="d-flex justify-content-center" style="gap:5px">
                             <h3>$</h3>
-                            <input class="value_input "  id = "average_monthly_income"/>
+                            <input class="value_input "  id = "average_monthly_income" onkeypress="return isNumberKey(event)"/>
                             <h3>-</h3>
                             <h3>$</h3>
-                            <input class="value_input "  id = "average_monthly_expense"/>
+                            <input class="value_input "  id = "average_monthly_expense" onkeypress="return isNumberKey(event)"/>
                             <h3>=</h3>
                             <h3>$</h3>
                             <h3 class="value_cal  average_monthly_net_income"></h3>
@@ -134,7 +134,7 @@
                             <h3 class="value_cal  average_monthly_net_income"></h3>
                             <h3>-</h3>
                             <h3>$</h3>
-                            <input class="value_input  " id = "personal_monthly_expense"/>
+                            <input class="value_input  " id = "personal_monthly_expense" onkeypress="return isNumberKey(event)"/>
                             <h3>=</h3>
                             <h3>$</h3>
                             <h3 class="value_cal  personal_profit" ></h3>
@@ -157,7 +157,7 @@
                             <h3 class="value_cal  average_monthly_net_income"></h3>
                             <h3>x</h3>
                             
-                            <input class="value_input " id = "percent_for_tax_payment" />
+                            <input class="value_input " id = "percent_for_tax_payment" onkeypress="return isNumberKey(event)" />
                             <h3>%</h3>
                             <h3>=</h3>
                             <h3>$</h3>
@@ -293,7 +293,16 @@
                 if (!isNaN(aValue) && !isNaN(bValue)) {
                     var cValue = aValue - bValue; 
                     var xValue = (aValue / cValue).toFixed(2); 
+                    if(xValue == 'Infinity'){
+                        xValue=0;
+
+                    }
                     var totalValue = (100 / xValue).toFixed(2); 
+
+                    if(totalValue == 'Infinity'){
+                        totalValue=0;
+
+                    }
                 }
                 else{
                     $(".c").html("");
@@ -317,7 +326,7 @@
 
         <script>
             $("#form2 input").on('input', function() {
-                console.log("bbbbbb");
+                
                 
                 var average_monthly_incomeValue = parseFloat($("#average_monthly_income").val());
                 var average_monthly_expenseValue = parseFloat($("#average_monthly_expense").val());
@@ -339,9 +348,8 @@
 
                     if(!isNaN(projected_tax_paymentValue)){
                         var quarterly_projected_tax_paymentValue = (projected_tax_paymentValue*3).toFixed(2);
-                        console.log("ssssssssssssssssssssssssss");
                         var annual_projected_tax_paymentValue = (projected_tax_paymentValue *12).toFixed(2);
-                        var profit_after_taxesValue =(average_monthly_net_incomeValue *projected_tax_paymentValue).toFixed(2);
+                        var profit_after_taxesValue =(average_monthly_net_incomeValue -projected_tax_paymentValue).toFixed(2);
                     }
 
                     
@@ -379,6 +387,19 @@
             function generatePdf() {
                 let formElement = document.getElementById('pdfForm');
                 html2pdf().from(formElement).save();
+            }
+
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+                // Allow decimal point (ASCII code 46) and numbers (ASCII codes 48 to 57)
+                if (charCode == 46 || (charCode >= 48 && charCode <= 57)) {
+                    // Ensure only one decimal point is entered
+                    if (charCode == 46 && evt.target.value.indexOf('.') !== -1)
+                        return false;
+                    return true;
+                }
+                return false;
             }
         </script>
     </body>
